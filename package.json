@@ -1,0 +1,16 @@
+{
+  "name": "demo-headless-craft-cms",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "author": "Rob Brennan <rob@therobbrennan.com> (therobbrennan.com)",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheRobBrennan/demo-headless-craft-cms.git"
+  },
+  "bugs": {
+    "url": "https://github.com/TheRobBrennan/demo-headless-craft-cms/issues"
+  },
+  "homepage": "https://github.com/TheRobBrennan/demo-headless-craft-cms#readme"
+}
