@@ -1,0 +1,9 @@
+baseUrl: 'http://$PRIMARY_SITE_URL'
+enabled: true
+handle: default
+hasUrls: true
+language: en-US
+name: '[DEMO] Headless Craft CMS '
+primary: true
+siteGroup: ce9e9c87-8838-473e-a84a-996bed2992ef
+sortOrder: 1
