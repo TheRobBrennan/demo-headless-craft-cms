@@ -1,0 +1,71 @@
+version: "2"
+services:
+  buildchain:
+    # If you are using GitLab CI, specify the location of your registry
+    # image: registry.gitlab.com/[your-username]/[your-project-slug]/buildchain:latest
+    build:
+      context: .
+      dockerfile: ./docker-config/buildchain/Dockerfile
+    volumes:
+      # Mount our node-modules folder to persist across containers
+      - node-modules:/project/node_modules
+      # If any changes are made within the container to package.json, they will be reflected in the package.json we have checked into source control
+      - ./docker-config/buildchain/package.json:/project/package.json
+      # We're mounting the entire project into the buildchain container so that it has access to everything
+      - ./src:/project/src
+    # Change the command that runs when we boot our container
+    command: yarn run watch
+
+  nginx:
+    build:
+      context: .
+      dockerfile: ./docker-config/nginx/Dockerfile
+    ports:
+      - 80:80
+    volumes:
+      - cpresources:/var/www/html/web/cpresources
+      - ./src/web:/var/www/html/web
+
+  # REMEMBER where we had "fastcgi_pass php:9000;" in our nginx configuration? This is where the hostname comes from.
+  php:
+    build:
+      context: .
+      dockerfile: ./docker-config/php/Dockerfile
+    expose:
+      - 9000
+    volumes:
+      - cpresources:/var/www/html/web/cpresources
+      - ./src/composer.json:/var/www/html/composer.json
+      - ./src/composer.lock:/var/www/html/composer.lock
+      - ./src/config:/var/www/html/config
+      - ./src/modules:/var/www/html/modules
+      - ./src/templates:/var/www/html/templates
+      - ./src/web:/var/www/html/web
+    environment:
+      ENVIRONMENT: dev
+      DB_DRIVER: mysql
+      DB_SERVER: database
+      DB_USER: project
+      DB_PASSWORD: project
+      DB_DATABASE: project
+      DB_SCHEMA: public
+      DB_TABLE_PREFIX: craft_
+      SITE_URL: http://localhost
+      SECURITY_KEY: AAAAAAAAAAAAAAAAAAAAAAAAAAA
+
+  database:
+    image: mariadb:10.3
+    volumes:
+      - db-data:/var/lib/mysql
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: project
+      MYSQL_USER: project
+      MYSQL_PASSWORD: project
+
+volumes:
+  db-data:
+  cpresources:
+  node-modules:
