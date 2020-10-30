@@ -5,6 +5,18 @@
   "keywords": [],
   "author": "Rob Brennan <rob@therobbrennan.com> (therobbrennan.com)",
   "license": "ISC",
+  "scripts": {
+    "start": "npm run start:docker",
+    "start:clean": "npm run start:docker:clean",
+    "start:docker": "npm run start:docker:craft-cms",
+    "start:docker:clean": "npm run start:docker:craft-cms:clean",
+    "start:docker:craft-cms": "cd backend/craft-cms && npm run start",
+    "start:docker:craft-cms:clean": "cd backend/craft-cms && npm run start:clean",
+    "stop": "npm run stop:docker",
+    "stop:docker": "cd backend/craft-cms && npm run stop",
+    "destroy": "npm run destroy:docker",
+    "destroy:docker": "cd backend/craft-cms && npm run destroy"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/TheRobBrennan/demo-headless-craft-cms.git"
