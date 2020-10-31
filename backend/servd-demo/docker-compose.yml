@@ -1,4 +1,4 @@
-version: '3.5'
+version: "3.5"
 services:
   nginx:
     build:
@@ -34,7 +34,7 @@ services:
       DB_SCHEMA: public
       DB_TABLE_PREFIX:
       SECURITY_KEY: ${CRAFT_SECURITY_KEY}
-      ALLOW_ADMIN_CHANGES: 'true'
+      ALLOW_ADMIN_CHANGES: "true"
 
   database:
     image: mariadb:10.3
@@ -45,7 +45,7 @@ services:
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
-          
+
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     ports:
@@ -62,7 +62,7 @@ services:
       - ./src:/project/src
     ports:
       - 3000:3000
-      - 3001:3001  
+      - 3001:3001
     command: [./node_modules/.bin/gulp, watch]
 
 volumes:
