@@ -19,5 +19,6 @@
  */
 
 return [
+  // Send requests for /graphql to our GraphQL controller
   'graphql' => 'graphql/api',
 ];
